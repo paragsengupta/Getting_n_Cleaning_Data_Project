@@ -35,7 +35,7 @@ features <- read.table('./data/UCI HAR Dataset/features.txt')
 activityLabels = read.table('./data/UCI HAR Dataset/activity_labels.txt')	
 
 # 1.2 Assigning column names for better readability using colnames():	
-colnames(x_train) <- features[,2] 	
+colnames(x_train) <- features[,2]
 colnames(y_train) <-"activityId"	
 colnames(subject_train) <- "subjectId"	
 colnames(x_test) <- features[,2] 	

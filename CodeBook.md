@@ -1,61 +1,106 @@
-
 Source Data Set used:
+
 Human Activity Recognition Using Smartphones
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 Data for the project:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-R Script File:
-R code used to generate the tidy report can be found in "run_analysis.R"
-It performs the following steps (in accordance assigned task of course work):
+Data Set Description – Variables:
 
-0. Downloading dataset
-0.1 Checking for existence of local working directory 
-0.2 Storing the data set url into a variable
-0.3 Downloading the data set from the url and storing that into a zip file in the local working directory
-0.4 Unzip dataset to the local working directory
+–	"subject" 
+o	Integer
+o	Identifies one of the of 30 volunteers that were part of the experiment.
 
-1. Merging the training and the test sets to create one data set
-1.1 Reading downloaded and unzipped data files
-1.1.1 Reading trainings tables using read.table() and storing them into respective variables 
-1.1.2 Reading testing tables using read.table() and storing them into respective variables 
-1.1.3 Reading feature vector using read.table() and storing it into a variable 
-1.1.4 Reading activity labels using read.table() and storing it into a variable 
-1.2 Assigning column names for better readability using colnames()
-1.3 Merging all data in one set:
-1.3.1 Merging training data in one merged set using cbind():
-1.3.2 Merging test data in one merged set using cbind()
-1.3.3 Combining the two merged data sets from training and test into one final merged data set setAllInOne 
+–	"activity"
+o	Character
+o	Identifies one of the six activities that each of the 30 volunteers of the experiment performed
+o	“laying”, “sitting”, “standing”, “walking”, “walking_downstairs”, “walking_upstairs”
 
-2. Extracting only the measurements on the mean and standard deviation for each measurement
-	2.1 Reading column names from the final merged data set setAllInOne
-	2.2 Create vector for defining ID, mean and standard deviation 
-	2.3 Making necessary subset from final merged data set setAllInOne 
+–	"measurement"
+o	Character 
+o	fBodyAcc, fBodyAccJerk, fBodyAccMag, fBodyBodyAccJerkMag, fBodyBodyGyroJerkMag, fBodyBodyGyroMag, fBodyGyro, tBodyAcc, tBodyAccJerk, tBodyAccJerkMag, tBodyAccMag, tBodyGyro, tBodyGyroJerk, tBodyGyroJerkMag. tBodyGyroMag, tGravityAcc, tGravityAccMag
+o	"tAcc-XYZ"" and "tGyro-XYZ"" are raw signals coming from the accelerometer and gyroscope 3-axial. 
+o	Prefix 't' denote the time domain of the measurement. "tBodyAcc"" and "tGravityAcc", derived from the separation into a body and a gravity part of the acceleration signals. 
+o	Jerk signals "tBodyAccJerk" and "tBodyGyroJerk" are obtained by deriving in time the body linear acceleration and the angular velocity. 
+o	"tBodyAccMag", "tGravityAccMag", "tBodyAccJerkMag", "tBodyGyroMag", "tBodyGyroJerkMag" are the magnitude of these three-dimensional signals and are calculated using the Euclidean norm (). 
+o	"fBodyAcc", "fBodyAccJerk", "fBodyGyro", "fBodyAccJerkMag", "fBodyGyroMag", "fBodyGyroJerkMag" are the Fast Fourier Transform (FFT) of these signals. (Note the 'f' to indicate frequency domain signals).
 
-3. Using descriptive activity names to name the activities in the data set
+–	"stat": variables estimated from the signals
+o	mean: mean value
+o	std: standard deviation
 
-4. Appropriately labeling the data set with descriptive variable names
+–	"axis":
+o	X,Y,Z: for three dimensional signals specifies the relevant axis
+o	NA: identifies "magnitude" values
 
-5. Creating a second, independent tidy data set with the average of each variable for each activity and each subject
-5.1 Making second tidy data set
-5.2 Writing second tidy data set in txt file
+–	"value": 
+o	The statistical values of mean and standard deviations based on the subject, activity, measurements and the axis
 
-PS: The code takes for granted all the data is present in the same folder, un-compressed and without names altered.
+Global Environment Variables
 
-Variables used for the process:
-Data from downloaded files:
-–	x_train
-–	y_train
-–	x_test
-–	y_test
-–	subject_train 
-–	subject_test
+Data:
 
-Merged data sets for further analysis:
-–	x_data
-–	y_data
-–	subject_data
+–	x_train : training data set : 7352 observations of 561 variables
+–	y_train : training labels : 7352 observations of 1 variable
+–	y_test : test data set : 2947 observations of 561 variables
+–	x_test : test labels : 2947 observations of 1 variable
+–	subject_train : subjects participating in the training study : 7352 observations of 1 variable
+–	subject_test : subjects participating in the test study : 2947 observations of 1 variable
+–	train : merged x_train and y_train data sets : 7352 observations of 563 variables
+–	test : merged x_test and y_test data sets : 2947 observations of 563 variables
+–	df : merged single data set with both training and test data : 10299 observations of 68 variables
+–	activities : various activities performed by the subjects : 6 observations of 2 variables
+–	tidyDataFrame : complete tidy data set : 679734 observations of 6 variables
+–	summary_tidyDataFrame : 11880 observations of 6 variables
 
-Correct labels for variable in x_data dataset
-–	features
+Values:
+
+–	fileurl : the website url for the source dataset
+–	cnames : column names for the source data set : chr[1:563]
+–	toKeepMeanStd : summarized data set with only mean and standard deviation values : chr[1:68]
+
+How the script (‘run_analysis.R’) performed the analysis and cleaning of the data
+
+–	Initialized the libraries required
+–	Set the working directory and the url which has the source dataset
+–	Downloaded the dataset from the url as a zipped file and unzipped that into the working directory
+–	Read the relevant files from the dataset and stored them accordingly into x_train, y_train, x_test, x_test, subject_train, subject_test
+–	Merged the dataset and labels of each of training and test data into one train and test dataset
+–	Merged using cbind both the training and test dataset into one single data frame
+–	Worked with the column names and activity names to create a clean data frame with assigned column names
+–	Extract a subset of only the mean and standard deviations from the data frame
+–	Assigned descriptive names to the extracted subset
+–	Tidy up with extracted subset
+–	Create a second tidy data set
+
+Sample of the final tidy data set:
+
+Random:
+
+"subject" "activity" "measurement" "stat" "axis" "value"
+1 "laying" "fBodyAcc" "mean" "X" -0.9390990524
+1 "standing" "fBodyAcc" "std" "Y" -0.972293102075472
+1 "walking" "fBodyAcc" "mean" "Z" -0.331560117789474
+1 "walking_downstairs" "fBodyAccJerk" "std" "Z" -0.401721464285714
+1 "walking_upstairs" "fBodyAccJerk" "std" "Y" -0.381777065283019
+
+Head:
+
+1 "laying" "fBodyAcc" "mean" "X" -0.9390990524
+1 "laying" "fBodyAcc" "mean" "Y" -0.86706520518
+1 "laying" "fBodyAcc" "mean" "Z" -0.8826668762
+1 "laying" "fBodyAcc" "std" "X" -0.9244374346
+1 "laying" "fBodyAcc" "std" "Y" -0.8336255561
+1 "laying" "fBodyAcc" "std" "Z" -0.81289155944
+
+Tail:
+
+30 "walking_upstairs" "tGravityAcc" "mean" "Z" -0.0221401100714154
+30 "walking_upstairs" "tGravityAcc" "std" "X" -0.954033624307692
+30 "walking_upstairs" "tGravityAcc" "std" "Y" -0.914933936
+30 "walking_upstairs" "tGravityAcc" "std" "Z" -0.862402791230769
+30 "walking_upstairs" "tGravityAccMag" "mean" NA -0.137627857227385
+30 "walking_upstairs" "tGravityAccMag" "std" NA -0.327410815861538
+
+

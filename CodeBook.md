@@ -103,4 +103,3 @@ Tail:
 30 "walking_upstairs" "tGravityAccMag" "mean" NA -0.137627857227385
 30 "walking_upstairs" "tGravityAccMag" "std" NA -0.327410815861538
 
-

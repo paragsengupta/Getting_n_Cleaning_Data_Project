@@ -58,3 +58,4 @@ summary_tidyDataFrame <- tidyDataFrame %>%
 # summary_tidyDataFrame contains 11880 observations of 39 variables
 summary_tidyDataFrame
 write.table(summary_tidyDataFrame, 'secTidyDataset.txt', row.names = FALSE)
+
